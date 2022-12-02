@@ -1,5 +1,7 @@
-#
+# --- Day 2: Rock Paper Scissors ---
 import time, tracemalloc    # Used for efficiency tracking of elapsed time and memory usage
+from functools import reduce
+
 lines = open("day-2-puzzle-input.txt","r").read().splitlines()
 
 def partOne()->int: # Returns the score from rock, paper, scissors
@@ -112,9 +114,12 @@ def partTwoA()->int: # Returns the score from rock, paper, scissors, using a dic
         (SCISSORS, DRAW): 6,
         (SCISSORS, WIN): 7,
     }
-    score = 0
-    for line in lines:
-        score += POINTS[(line[0], line[2])]
+    score = reduce(lambda a, b: a+b, list(map(lambda x: POINTS[(x[0], x[2])], lines)))
+    ''' Equivalent to:
+            score = 0
+            for line in lines:
+                score += POINTS[(line[0], line[2])]
+    '''
     return score
 
 
